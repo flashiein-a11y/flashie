@@ -1,0 +1,106 @@
+type UserProfile = 
+ record {
+   createdAt: Timestamp;
+   id: UserId;
+   savedAddresses: vec SavedAddress;
+ };
+type UserId = principal;
+type Timestamp = int;
+type SavedAddress = 
+ record {
+   address: text;
+   tag: text;
+ };
+type RestaurantId = nat;
+type Restaurant = 
+ record {
+   cuisineType: CuisineType;
+   deliveryFee: nat;
+   description: text;
+   estimatedDeliveryMinutes: nat;
+   id: RestaurantId;
+   imageUrl: text;
+   isOpen: bool;
+   name: text;
+   rating: nat;
+ };
+type PlaceOrderRequest = 
+ record {
+   deliveryAddress: text;
+   items: vec CartItem;
+   restaurantId: RestaurantId;
+   specialInstructions: text;
+ };
+type OrderStatus = 
+ variant {
+   cancelled;
+   confirmed;
+   delivered;
+   onTheWay;
+   preparing;
+ };
+type OrderId = nat;
+type Order = 
+ record {
+   createdAt: Timestamp;
+   deliveryAddress: text;
+   deliveryFee: nat;
+   estimatedDeliveryMinutes: nat;
+   id: OrderId;
+   items: vec CartItem;
+   restaurantId: RestaurantId;
+   restaurantName: text;
+   specialInstructions: text;
+   status: OrderStatus;
+   totalAmount: nat;
+   updatedAt: Timestamp;
+   userId: UserId;
+ };
+type MenuItemId = nat;
+type MenuItem = 
+ record {
+   category: text;
+   description: text;
+   id: MenuItemId;
+   imageUrl: text;
+   isAvailable: bool;
+   name: text;
+   price: nat;
+   restaurantId: RestaurantId;
+ };
+type CuisineType = 
+ variant {
+   american;
+   chinese;
+   fastFood;
+   indian;
+   italian;
+   japanese;
+   mediterranean;
+   mexican;
+   other: text;
+   thai;
+ };
+type CartItem = 
+ record {
+   menuItemId: MenuItemId;
+   name: text;
+   price: nat;
+   quantity: nat;
+   restaurantId: RestaurantId;
+ };
+service : {
+  getMenuItem: (id: MenuItemId) -> (opt MenuItem) query;
+  getMenuItems: (restaurantId: RestaurantId) -> (vec MenuItem) query;
+  getMyProfile: () -> (UserProfile) query;
+  getOrder: (orderId: OrderId) -> (opt Order) query;
+  getRestaurant: (id: RestaurantId) -> (opt Restaurant) query;
+  getUserOrders: () -> (vec Order) query;
+  listRestaurants: () -> (vec Restaurant) query;
+  placeOrder: (req: PlaceOrderRequest) -> (Order);
+  removeAddress: (addressTag: text) -> ();
+  reorder: (originalOrderId: OrderId, deliveryAddress: text) -> (opt Order);
+  saveAddress: (address: SavedAddress) -> ();
+  searchRestaurants: (nameQuery: text, cuisineFilter: opt CuisineType,
+   minRating: opt nat) -> (vec Restaurant) query;
+}

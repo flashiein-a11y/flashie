@@ -1,0 +1,23 @@
+{
+  "overview": "A full-featured food delivery app where customers can browse restaurants, explore menus, add items to cart, place orders, and track delivery status in real time.",
+  "features": [
+    "Restaurant browsing with search and filters",
+    "Menu organized by food categories with item details",
+    "Shopping cart with instant total updates",
+    "Order placement with delivery address",
+    "Order status tracking (confirmed, preparing, on the way, delivered)",
+    "Order history with reorder capability",
+    "Internet Identity login for secure accounts",
+    "User logo branding throughout the app",
+    "Sample restaurant and menu data included"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "food-delivery",
+    "restaurant",
+    "ordering",
+    "marketplace",
+    "ecommerce"
+  ],
+  "last_updated": "2026-04-21T21:31:52.412Z"
+}
